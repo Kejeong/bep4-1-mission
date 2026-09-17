@@ -37,6 +37,12 @@ public class Post extends BaseIdAndTime {
         this.content = content;
     }
 
+    /**
+     * 댓글작성
+     * @param author
+     * @param content
+     * @return
+     */
     public PostComment addComment(Member author, String content) {
         PostComment postComment = new PostComment(this, author, content);
 

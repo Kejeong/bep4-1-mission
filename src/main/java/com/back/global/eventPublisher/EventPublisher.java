@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EventPublisher {
+public class EventPublisher {  // 발행을 중계하는 클래스
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void publish(Object event) {
