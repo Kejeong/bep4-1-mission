@@ -1,10 +1,9 @@
-package com.back.initData;
+package com.back.global.initData;
 
-import com.back.entity.Member;
-import com.back.entity.Post;
-import com.back.repository.PostRepository;
-import com.back.service.MemberService;
-import com.back.service.PostService;
+import com.back.boundedContext.member.entity.Member;
+import com.back.boundedContext.Post.entity.Post;
+import com.back.boundedContext.member.service.Memberservice;
+import com.back.boundedContext.Post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -16,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class DataInit {
     private final DataInit self;
-    private final MemberService memberService;
+    private final Memberservice.MemberService memberService;
     private final PostService postService;
 
     public DataInit(@Lazy DataInit self,
-                    MemberService memberService,
+                    Memberservice.MemberService memberService,
                     PostService postService) {
         this.self = self;
         this.memberService = memberService;

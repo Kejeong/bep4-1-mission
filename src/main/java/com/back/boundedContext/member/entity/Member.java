@@ -1,12 +1,12 @@
-package com.back.entity;
+package com.back.boundedContext.member.entity;
 
-import com.back.jpa.entity.BaseIdAndTime;
+import com.back.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor  // 기본생성자가 있어야함
+@NoArgsConstructor
 public class Member extends BaseIdAndTime {
     @Column(unique = true)
     private String username;
