@@ -6,13 +6,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Service
-public class MemberPolicy {
+public class MemberPolicy {  // 정책들은 별도의 클래스에 모아놔야 한다.
     private static final int PASSWORD_CHANGE_DAYS = 90;
 
     public Duration getNeedToChangePasswordPeriod() {
         return Duration.ofDays(PASSWORD_CHANGE_DAYS);
     }
-
+    // 비밀번호가 몇일 남았는지 명세작성
     public int getNeedToChangePasswordDays() {
         return PASSWORD_CHANGE_DAYS;
     }
