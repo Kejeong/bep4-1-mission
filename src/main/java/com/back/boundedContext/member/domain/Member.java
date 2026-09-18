@@ -1,10 +1,8 @@
 package com.back.boundedContext.member.domain;
 
-import com.back.global.jpa.entity.BaseIdAndTime;
-import com.back.shared.event.MemberModifiedEvent;
+import com.back.shared.member.event.MemberModifiedEvent;
 import com.back.shared.member.domain.SourceMember;
 import com.back.shared.member.dto.MemberDto;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;

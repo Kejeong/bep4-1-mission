@@ -1,8 +1,8 @@
-package com.back.boundedContext.post.in;
+package com.back.boundedContext.cash.in;
 
-import com.back.boundedContext.post.app.PostFacade;
-import com.back.shared.member.event.MemberModifiedEvent;
+import com.back.boundedContext.cash.app.CashFacade;
 import com.back.shared.member.event.MemberJoinedEvent;
+import com.back.shared.member.event.MemberModifiedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,26 +13,26 @@ import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMI
 
 @Component
 @RequiredArgsConstructor
-public class PostEventListener {
-    private final PostFacade postFacade;
+public class CashEventListener {
+    private final CashFacade cashFacade;
 
     /**
-     * 가입 이벤트 수신
+     * 멤버 등록 이벤트
      * @param event
      */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MemberJoinedEvent event) {  // 멤버 가입 이벤트가 발생하면 PostMember 동기화
-        postFacade.syncMember(event.getMember());
+    public void handle(MemberJoinedEvent event) {
+        cashFacade.syncMember(event.getMember());
     }
 
     /**
-     * 수정 이벤트 수신
+     * 멤버 수정 이벤트
      * @param event
      */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberModifiedEvent event) {
-        postFacade.syncMember(event.getMember());  // 동기화
+        cashFacade.syncMember(event.getMember());
     }
 }

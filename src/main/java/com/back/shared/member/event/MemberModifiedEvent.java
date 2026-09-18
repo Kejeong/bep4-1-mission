@@ -1,4 +1,4 @@
-package com.back.shared.event;
+package com.back.shared.member.event;
 
 import com.back.shared.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
