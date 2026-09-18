@@ -1,9 +1,7 @@
-package com.back.global.initData;
+package com.back.boundedContext.post.in;
 
-import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.post.domain.Post;
-import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.post.app.PostFacade;
+import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
 import com.back.global.rsData.RsData;
 import lombok.extern.slf4j.Slf4j;
@@ -11,51 +9,32 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Slf4j
-public class DataInit {
-    private final DataInit self;
-    private final MemberFacade memberFacade;
+public class PostDataInit {
+    private final PostDataInit self;
     private final PostFacade postFacade;
 
-    public DataInit(@Lazy DataInit self,
-                    MemberFacade memberFacade,
-                    PostFacade postFacade) {
+    public PostDataInit(
+            @Lazy PostDataInit self,
+            PostFacade postFacade
+    ) {
         this.self = self;
-        this.memberFacade = memberFacade;
         this.postFacade = postFacade;
     }
 
     @Bean
-    public ApplicationRunner baseInitDataRunner() {
+    @Order(2)
+    public ApplicationRunner postDataInitApplicationRunner() {
         return args -> {
-            self.makeBaseMembers();
             self.makeBasePosts();
             self.makeBasePostComments();
         };
     }
 
-    /**
-     * 회원 가입 Data
-     */
-    @Transactional
-    public void makeBaseMembers() {
-        if (memberFacade.count() > 0) return;
-
-        Member systemMember = memberFacade.join("system", "1234", "시스템").getData();
-        Member holdingMember = memberFacade.join("holding", "1234", "홀딩").getData();
-        Member adminMember = memberFacade.join("admin", "1234", "관리자").getData();
-        Member user1Member = memberFacade.join("user1", "1234", "유저1").getData();
-        Member user2Member = memberFacade.join("user2", "1234", "유저2").getData();
-        Member user3Member = memberFacade.join("user3", "1234", "유저3").getData();
-    }
-
-
-    /**
-     * 게시글 등록 Data
-     */
     @Transactional
     public void makeBasePosts() {
         if (postFacade.count() > 0) return;
@@ -83,9 +62,6 @@ public class DataInit {
         log.debug(post6RsData.getMsg());
     }
 
-    /**
-     * 댓글 등록 DATA
-     */
     @Transactional
     public void makeBasePostComments() {
         Post post1 = postFacade.findById(1).get();
