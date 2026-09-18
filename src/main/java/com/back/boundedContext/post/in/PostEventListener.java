@@ -1,6 +1,7 @@
 package com.back.boundedContext.post.in;
 
 import com.back.boundedContext.post.app.PostFacade;
+import com.back.shared.event.MemberModifiedEvent;
 import com.back.shared.member.event.MemberJoinedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,9 +16,23 @@ import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMI
 public class PostEventListener {
     private final PostFacade postFacade;
 
+    /**
+     * 가입 이벤트 수신
+     * @param event
+     */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MemberJoinedEvent event) {  // 멤버 가입 이벤트가 발생하면 PostMember 동기화
         postFacade.syncMember(event.getMember());
+    }
+
+    /**
+     * 수정 이벤트 수신
+     * @param event
+     */
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(MemberModifiedEvent event) {
+        postFacade.syncMember(event.getMember());  // 동기화
     }
 }
