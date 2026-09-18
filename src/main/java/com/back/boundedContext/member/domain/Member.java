@@ -13,12 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class Member extends SourceMember {
-    @Column(unique = true)
-    private String username;
-    private String password;
-    private String nickname;
-    private int activityScore;
-
     public Member(String username, String password, String nickname) {
         super(username, password, nickname);
     }

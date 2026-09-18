@@ -6,10 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "POST_MEMBER")
 @Getter
+@NoArgsConstructor
 public class PostMember extends ReplicaMember {
     @Column(unique = true)
     private String username;
