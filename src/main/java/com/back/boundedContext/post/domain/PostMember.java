@@ -1,13 +1,11 @@
 package com.back.boundedContext.post.domain;
 
 
-import com.back.boundedContext.member.domain.Member;
 import com.back.shared.member.domain.ReplicaMember;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "POST_MEMBER")
