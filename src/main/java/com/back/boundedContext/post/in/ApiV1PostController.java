@@ -27,7 +27,7 @@ public class ApiV1PostController {
         return postFacade
                 .findByOrderByIdDesc()
                 .stream()
-                .map(PostDto::new) // Post로 반환되기 때문에 PostDto 형태로 return을 해야하기 때문에
+                .map(PostDto::new)
                 .toList();
     }
 
