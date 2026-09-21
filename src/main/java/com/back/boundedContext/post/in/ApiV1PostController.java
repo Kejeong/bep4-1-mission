@@ -1,0 +1,49 @@
+package com.back.boundedContext.post.in;
+
+import com.back.boundedContext.post.app.PostFacade;
+import com.back.shared.post.dto.PostDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/post/posts")
+@RequiredArgsConstructor
+public class ApiV1PostController {
+    private final PostFacade postFacade;
+
+    /**
+     * 글 목록 조회
+     * @return
+     */
+    @GetMapping
+    @Transactional(readOnly = true)
+    public List<PostDto> getItems() {
+        return postFacade
+                .findByOrderByIdDesc()
+                .stream()
+                .map(PostDto::new) // Post로 반환되기 때문에 PostDto 형태로 return을 해야하기 때문에
+                .toList();
+    }
+
+    /**
+     * 글 상세 조회
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @Transactional(readOnly = true)
+    public PostDto getItem(
+            @PathVariable int id
+    ) {
+        return postFacade
+                .findById(id)
+                .map(PostDto::new)
+                .get();
+    }
+}
