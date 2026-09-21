@@ -1,6 +1,8 @@
 package com.back.boundedContext.market.in;
 
 import com.back.boundedContext.market.app.MarketFacade;
+import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
+import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
 import com.back.shared.market.event.MarketMemberCreatedEvent;
 import com.back.shared.member.event.MemberJoinedEvent;
 import com.back.shared.member.event.MemberModifiedEvent;
@@ -45,5 +47,25 @@ public class MarketEventListener {
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(MarketMemberCreatedEvent event) {
         marketFacade.createCart(event.getMember());
+    }
+
+    /**
+     * 주문 결제 성공
+     * @param event
+     */
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashOrderPaymentSucceededEvent event) {
+        marketFacade.handle(event);
+    }
+
+    /**
+     * 주문 결제 실패
+     * @param event
+     */
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @Transactional(propagation = REQUIRES_NEW)
+    public void handle(CashOrderPaymentFailedEvent event) {
+        marketFacade.handle(event);
     }
 }

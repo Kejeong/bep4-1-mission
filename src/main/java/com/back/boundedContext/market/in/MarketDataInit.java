@@ -39,6 +39,7 @@ public class MarketDataInit {
             self.makeBaseProducts();
             self.makeBaseCartItems();
             self.makeBaseOrders();
+            self.makeBasePaidOrders();
         };
     }
 
@@ -121,6 +122,9 @@ public class MarketDataInit {
         );
     }
 
+    /**
+     * 장바구니 생성
+     */
     @Transactional
     public void makeBaseCartItems() {
         MarketMember user1Member = marketFacade.findMemberByUsername("user1").get();
@@ -153,6 +157,9 @@ public class MarketDataInit {
         cart3.addItem(product2);
     }
 
+    /**
+     * 주문생성
+     */
     @Transactional
     public void makeBaseOrders() {
         if (marketFacade.ordersCount() > 0) return;
@@ -181,5 +188,18 @@ public class MarketDataInit {
         cart1.addItem(product2);
         cart1.addItem(product3);
         cart1.addItem(product4);
+    }
+
+    /**
+     * 주문결제
+     */
+    @Transactional
+    public void makeBasePaidOrders() {
+        Order order1 = marketFacade.findOrderById(1).get();
+
+        if (order1.isPaid()) return;
+
+        //order1에 대한 결제요청
+        marketFacade.requestPayment(order1, 0);
     }
 }

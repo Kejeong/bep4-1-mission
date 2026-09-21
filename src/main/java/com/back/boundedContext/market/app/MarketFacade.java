@@ -5,6 +5,8 @@ import com.back.boundedContext.market.domain.MarketMember;
 import com.back.boundedContext.market.domain.Order;
 import com.back.boundedContext.market.domain.Product;
 import com.back.global.rsData.RsData;
+import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
+import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
 import com.back.shared.market.dto.MarketMemberDto;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,8 @@ public class MarketFacade {
     private final MarketSyncMemberUseCase marketSyncMemberUseCase;
     private final MarketSupport marketSupport;
     private final MarketCreateOrderUseCase marketCreateOrderUseCase;
+    private final MarketCompleteOrderPaymentUseCase marketCompleteOrderPaymentUseCase;
+    private final MarketCancelOrderRequestPaymentUseCase marketCancelOrderRequestPaymentUseCase;
 
     /**
      * 멤버 동기화
@@ -120,5 +124,43 @@ public class MarketFacade {
     @Transactional
     public RsData<Order> createOrder(Cart cart) {
         return marketCreateOrderUseCase.createOrder(cart);
+    }
+
+    /**
+     * 주문상품 조회
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public Optional<Order> findOrderById(int id) {
+        return marketSupport.findOrderById(id);
+    }
+
+    /**
+     * 결제요청
+     * @param order
+     * @param pgPaymentAmount
+     */
+    @Transactional
+    public void requestPayment(Order order, long pgPaymentAmount) {
+        order.requestPayment(pgPaymentAmount);
+    }
+
+    /**
+     * 결제 성공 이벤트 처리
+     * @param event
+     */
+    @Transactional
+    public void handle(CashOrderPaymentSucceededEvent event) {
+        marketCompleteOrderPaymentUseCase.handle(event);
+    }
+
+    /**
+     * 결제 실패 이벤트 처리
+     * @param event
+     */
+    @Transactional
+    public void handle(CashOrderPaymentFailedEvent event) {
+        marketCancelOrderRequestPaymentUseCase.handle(event);
     }
 }
