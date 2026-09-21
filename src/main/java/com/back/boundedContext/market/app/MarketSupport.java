@@ -1,7 +1,11 @@
 package com.back.boundedContext.market.app;
 
+import com.back.boundedContext.market.domain.Cart;
 import com.back.boundedContext.market.domain.MarketMember;
+import com.back.boundedContext.market.domain.Product;
+import com.back.boundedContext.market.out.CartRepository;
 import com.back.boundedContext.market.out.ProductRepository;
+import com.back.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.back.boundedContext.market.out.MarketMemberRepository;
@@ -13,6 +17,7 @@ import java.util.Optional;
 public class MarketSupport {
     private final ProductRepository productRepository;
     private final MarketMemberRepository marketMemberRepository;
+    private final CartRepository cartRepository;
 
     public long countProducts() {
         return productRepository.count();
@@ -20,5 +25,13 @@ public class MarketSupport {
 
     public Optional<MarketMember> findMemberByUsername(String username) {
         return marketMemberRepository.findByUsername(username);
+    }
+
+    public Optional<Cart> findCartByBuyer(MarketMember buyer) {
+        return cartRepository.findByBuyer(buyer);
+    }
+
+    public Optional<Product> findProductById(int id) {
+        return productRepository.findById(id);
     }
 }
