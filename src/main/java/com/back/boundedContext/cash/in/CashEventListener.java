@@ -38,6 +38,10 @@ public class CashEventListener {
         cashFacade.syncMember(event.getMember());
     }
 
+    /**
+     * 지갑생성 이벤트
+     * @param event
+     */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(CashMemberCreatedEvent event) {
