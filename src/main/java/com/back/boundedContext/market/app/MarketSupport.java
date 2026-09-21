@@ -4,6 +4,7 @@ import com.back.boundedContext.market.domain.Cart;
 import com.back.boundedContext.market.domain.MarketMember;
 import com.back.boundedContext.market.domain.Product;
 import com.back.boundedContext.market.out.CartRepository;
+import com.back.boundedContext.market.out.OrderRepository;
 import com.back.boundedContext.market.out.ProductRepository;
 import com.back.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class MarketSupport {
     private final ProductRepository productRepository;
     private final MarketMemberRepository marketMemberRepository;
     private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
 
     public long countProducts() {
         return productRepository.count();
@@ -33,5 +35,9 @@ public class MarketSupport {
 
     public Optional<Product> findProductById(int id) {
         return productRepository.findById(id);
+    }
+
+    public long countOrders() {
+        return orderRepository.count();
     }
 }

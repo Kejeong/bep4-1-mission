@@ -30,9 +30,20 @@ public class Cart extends BaseManualIdAndTime {
         return itemsCount > 0;
     }
 
+    /**
+     * 장바구니 상품 추가
+     * @param product
+     */
     public void addItem(Product product) {
         CartItem cartItem = new CartItem(this, product);
         this.getItems().add(cartItem);
         this.itemsCount++;
+    }
+
+    /**
+     * 장바구니 초기화
+     */
+    public void clearItems() {
+        this.getItems().clear();
     }
 }

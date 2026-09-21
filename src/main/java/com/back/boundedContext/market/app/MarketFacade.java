@@ -2,6 +2,7 @@ package com.back.boundedContext.market.app;
 
 import com.back.boundedContext.market.domain.Cart;
 import com.back.boundedContext.market.domain.MarketMember;
+import com.back.boundedContext.market.domain.Order;
 import com.back.boundedContext.market.domain.Product;
 import com.back.global.rsData.RsData;
 import com.back.shared.market.dto.MarketMemberDto;
@@ -19,6 +20,7 @@ public class MarketFacade {
     private final MarketCreateCartUseCase marketCreateCartUseCase;
     private final MarketSyncMemberUseCase marketSyncMemberUseCase;
     private final MarketSupport marketSupport;
+    private final MarketCreateOrderUseCase marketCreateOrderUseCase;
 
     /**
      * 멤버 동기화
@@ -71,6 +73,11 @@ public class MarketFacade {
         );
     }
 
+    /**
+     * 멤버 조회
+     * @param username
+     * @return
+     */
     @Transactional(readOnly = true)
     public Optional<MarketMember> findMemberByUsername(String username) {
         return marketSupport.findMemberByUsername(username);
@@ -96,4 +103,22 @@ public class MarketFacade {
         return marketSupport.findProductById(id);
     }
 
+    /**
+     * 주문 건 수
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public long ordersCount() {
+        return marketSupport.countOrders();
+    }
+
+    /**
+     * 주문 생성
+     * @param cart
+     * @return
+     */
+    @Transactional
+    public RsData<Order> createOrder(Cart cart) {
+        return marketCreateOrderUseCase.createOrder(cart);
+    }
 }
