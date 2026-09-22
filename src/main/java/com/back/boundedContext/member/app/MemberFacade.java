@@ -19,7 +19,8 @@ public class MemberFacade {
     private final MemberGetRandomSecureTipUseCase memberGetRandomSecureTipUseCase;
 
     /**
-     * 멤버 가입
+     * 회원을 가입시킨다.
+     *
      * @param username
      * @param password
      * @param nickname
@@ -35,7 +36,7 @@ public class MemberFacade {
     }
 
     /**
-     * 멤버 수
+     * 회원 수를 반환한다.
      * @return
      */
     @Transactional(readOnly = true)
@@ -44,7 +45,7 @@ public class MemberFacade {
     }
 
     /**
-     * 비밀번호 팁
+     * 비밀번호 입력 화면에 표시할 무작위 보안 안내 문구를 반환한다.
      * @return
      */
     public String getRandomSecureTip() {

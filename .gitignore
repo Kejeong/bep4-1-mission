@@ -38,5 +38,5 @@ out/
 
 # Local environment secrets
 .env
-.env.*
-!.env.default
+.env
+!.env

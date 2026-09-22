@@ -26,6 +26,26 @@ public class MarketFacade {
     private final MarketCompleteOrderPaymentUseCase marketCompleteOrderPaymentUseCase;
     private final MarketCancelOrderRequestPaymentUseCase marketCancelOrderRequestPaymentUseCase;
 
+    @Transactional(readOnly = true)
+    public Optional<MarketMember> findMemberByUsername(String username) {
+        return marketSupport.findMemberByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Cart> findCartByBuyer(MarketMember buyer) {
+        return marketSupport.findCartByBuyer(buyer);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Product> findProductById(int id) {
+        return marketSupport.findProductById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Order> findOrderById(int id) {
+        return marketSupport.findOrderById(id);
+    }
+
     /**
      * 회원 서비스의 회원 정보를 마켓 컨텍스트의 회원 정보와 동기화한다.
      *
@@ -81,17 +101,6 @@ public class MarketFacade {
     }
 
     /**
-     * 사용자명으로 회원을 조회한다.
-     *
-     * @param username
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Optional<MarketMember> findMemberByUsername(String username) {
-        return marketSupport.findMemberByUsername(username);
-    }
-
-    /**
      * 마켓 회원의 장바구니를 생성한다.
      *
      * @param buyer
@@ -100,16 +109,6 @@ public class MarketFacade {
     @Transactional
     public RsData<Cart> createCart(MarketMemberDto buyer) {
         return marketCreateCartUseCase.createCart(buyer);
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Cart> findCartByBuyer(MarketMember buyer) {
-        return marketSupport.findCartByBuyer(buyer);
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Product> findProductById(int id) {
-        return marketSupport.findProductById(id);
     }
 
     /**
@@ -131,17 +130,6 @@ public class MarketFacade {
     @Transactional
     public RsData<Order> createOrder(Cart cart) {
         return marketCreateOrderUseCase.createOrder(cart);
-    }
-
-    /**
-     * ID로 주문을 조회한다.
-     *
-     * @param id
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Optional<Order> findOrderById(int id) {
-        return marketSupport.findOrderById(id);
     }
 
     /**
