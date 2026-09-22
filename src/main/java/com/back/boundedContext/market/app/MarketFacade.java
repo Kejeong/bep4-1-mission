@@ -148,20 +148,20 @@ public class MarketFacade {
     /**
      * 지갑 결제 성공 이벤트를 처리해 주문을 결제 완료 상태로 변경한다.
      *
-     * @param event
+     * @param orderId 주문ID
      */
     @Transactional
-    public void handle(CashOrderPaymentSucceededEvent event) {
-        marketCompleteOrderPaymentUseCase.handle(event);
+    public void completeOrderPayment(int orderId) {
+        marketCompleteOrderPaymentUseCase.completePayment(orderId);
     }
 
     /**
      * 지갑 결제 실패 이벤트를 처리해 주문의 결제 요청 상태를 해제한다.
      *
-     * @param event
+     * @param orderId 주문ID
      */
     @Transactional
-    public void handle(CashOrderPaymentFailedEvent event) {
-        marketCancelOrderRequestPaymentUseCase.handle(event);
+    public void cancelOrderRequestPayment(int orderId) {
+        marketCancelOrderRequestPaymentUseCase.cancelRequestPayment(orderId);
     }
 }

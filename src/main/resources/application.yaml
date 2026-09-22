@@ -34,7 +34,7 @@ custom:
   global:
     internalBackUrl: http://localhost:${server.port:8080}
     holdingMemberId: 2
-    member:
+  member:
       password:
         changeDays: 90
   market:

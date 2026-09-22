@@ -20,8 +20,7 @@ public class CashEventListener {
     private final CashFacade cashFacade;
 
     /**
-     * 멤버 등록 이벤트
-     * @param event
+     * 회원가입시 이벤트를 호출한다.
      */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
@@ -30,8 +29,7 @@ public class CashEventListener {
     }
 
     /**
-     * 멤버 수정 이벤트
-     * @param event
+     * 회원수정시 이벤트를 호출한다.
      */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
@@ -40,8 +38,7 @@ public class CashEventListener {
     }
 
     /**
-     * 지갑생성 이벤트
-     * @param event
+     * 캐시멤버가 등록될 때 이벤트를 호출한다.
      */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
@@ -49,9 +46,12 @@ public class CashEventListener {
         cashFacade.createWallet(event.getMember());
     }
 
+    /**
+     * 주문결제요청 이벤트를 처리한다.
+     */
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MarketOrderPaymentRequestedEvent event) {
-        cashFacade.handle(event);
+    public void completeOrderPayment(MarketOrderPaymentRequestedEvent event) {
+        cashFacade.completeOrderPayment(event.getOrder(), event.getPgPaymentAmount());
     }
 }
