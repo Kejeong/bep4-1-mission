@@ -1,6 +1,7 @@
 package com.back.boundedContext.cash.domain;
 
 
+import com.back.shared.cash.dto.CashMemberDto;
 import com.back.shared.member.domain.ReplicaMember;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,5 +17,16 @@ import java.time.LocalDateTime;
 public class CashMember extends ReplicaMember {  // 복제본 멤버이므로 ReplicaMember 상속
     public CashMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
         super(id, createDate, modifyDate, username, password, nickname, activityScore);
+    }
+
+    public CashMemberDto toDto() {
+        return new CashMemberDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                getUsername(),
+                getNickname(),
+                getActivityScore()
+        );
     }
 }

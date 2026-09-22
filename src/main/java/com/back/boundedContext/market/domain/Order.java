@@ -42,6 +42,20 @@ public class Order extends BaseIdAndTime {
         });
     }
 
+    public OrderDto toDto() {
+        return new OrderDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                buyer.getId(),
+                buyer.getNickname(),
+                price,
+                salePrice,
+                requestPaymentDate,
+                paymentDate
+        );
+    }
+
     /**
      * 주문 상품 추가
      * @param product
@@ -77,7 +91,7 @@ public class Order extends BaseIdAndTime {
         requestPaymentDate = LocalDateTime.now();
 
         // 결제이벤트 발생
-        publishEvent(new MarketOrderPaymentRequestedEvent(new OrderDto(this), pgPaymentAmount));
+        publishEvent(new MarketOrderPaymentRequestedEvent(toDto(), pgPaymentAmount));
     }
 
     /**

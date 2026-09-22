@@ -34,7 +34,7 @@ public class PostWriteUseCase {
 
         // TODO: 이벤트 수정
         eventPublisher.publish(
-                new PostCreatedEvent(new PostDto(post))
+                new PostCreatedEvent(post.toDto())
         );
 
         // 글 작성시 랜덤팁 발생
