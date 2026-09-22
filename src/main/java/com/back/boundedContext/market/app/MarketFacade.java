@@ -27,7 +27,8 @@ public class MarketFacade {
     private final MarketCancelOrderRequestPaymentUseCase marketCancelOrderRequestPaymentUseCase;
 
     /**
-     * 멤버 동기화
+     * 회원 서비스의 회원 정보를 마켓 컨텍스트의 회원 정보와 동기화한다.
+     *
      * @param member
      * @return
      */
@@ -37,7 +38,8 @@ public class MarketFacade {
     }
 
     /**
-     * 상품건수 확인
+     * 등록된 상품의 건 수를 반환한다.
+     *
      * @return
      */
     @Transactional(readOnly = true)
@@ -46,7 +48,8 @@ public class MarketFacade {
     }
 
     /**
-     * 상품등록
+     * 상품을 등록한다.
+     *
      * @param seller
      * @param sourceTypeCode
      * @param sourceId
@@ -78,7 +81,8 @@ public class MarketFacade {
     }
 
     /**
-     * 멤버 조회
+     * 사용자명으로 회원을 조회한다.
+     *
      * @param username
      * @return
      */
@@ -88,7 +92,8 @@ public class MarketFacade {
     }
 
     /**
-     * 장바구니 생성
+     * 마켓 회원의 장바구니를 생성한다.
+     *
      * @param buyer
      * @return
      */
@@ -108,7 +113,8 @@ public class MarketFacade {
     }
 
     /**
-     * 주문 건 수
+     * 주문 건수를 반환한다.
+     *
      * @return
      */
     @Transactional(readOnly = true)
@@ -117,7 +123,8 @@ public class MarketFacade {
     }
 
     /**
-     * 주문 생성
+     * 장바구니의 현재 상품을 기준으로 주문을 생성한다.
+     *
      * @param cart
      * @return
      */
@@ -127,7 +134,8 @@ public class MarketFacade {
     }
 
     /**
-     * 주문상품 조회
+     * ID로 주문을 조회한다.
+     *
      * @param id
      * @return
      */
@@ -137,7 +145,10 @@ public class MarketFacade {
     }
 
     /**
-     * 결제요청
+     * 주문의 지갑 결제를 요청한다.
+     *
+     * 주문을 결제 진행 상태로 변경하고 결제 요청 이벤트를 발행한다.
+     * 실제 지갑 차감 및 주문 완료 처리는 이벤트 리스너에서 후속 처리된다.
      * @param order
      * @param pgPaymentAmount
      */
@@ -147,7 +158,8 @@ public class MarketFacade {
     }
 
     /**
-     * 결제 성공 이벤트 처리
+     * 지갑 결제 성공 이벤트를 처리해 주문을 결제 완료 상태로 변경한다.
+     *
      * @param event
      */
     @Transactional
@@ -156,7 +168,8 @@ public class MarketFacade {
     }
 
     /**
-     * 결제 실패 이벤트 처리
+     * 지갑 결제 실패 이벤트를 처리해 주문의 결제 요청 상태를 해제한다.
+     *
      * @param event
      */
     @Transactional

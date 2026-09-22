@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "CASH_WALLET")
 @NoArgsConstructor
+@Getter
 public class Wallet extends BaseManualIdAndTime {
     @ManyToOne(fetch = FetchType.LAZY)
     private CashMember holder;

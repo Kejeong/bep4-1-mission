@@ -61,8 +61,17 @@ public class CashFacade {
         return cashSupport.findWalletByHolder(holder);
     }
 
+    /**
+     * 주문결제요청
+     * @param event
+     */
     @Transactional
     public void handle(MarketOrderPaymentRequestedEvent event) {
         cashCompleteOrderPaymentUseCase.handle(event);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Wallet> findWalletByHolderId(int holderId) {
+        return cashSupport.findWalletByHolderId(holderId);
     }
 }
