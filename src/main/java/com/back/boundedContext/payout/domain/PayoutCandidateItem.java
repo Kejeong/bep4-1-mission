@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+/**
+ * 정산 대기중인 정산 후보
+ */
 @Entity
 @Table(name = "PAYOUT_PAYOUT_CANDIDATE_ITEM")
 @NoArgsConstructor
@@ -17,14 +20,21 @@ import static jakarta.persistence.FetchType.LAZY;
 public class PayoutCandidateItem extends BaseIdAndTime {
     @Enumerated(EnumType.STRING)
     private PayoutEventType eventType;
+
     String relTypeCode;
+
     private int relId;
+
     private LocalDateTime paymentDate;
+
     @ManyToOne(fetch = LAZY)
-    private PayoutMember payer;
+    private PayoutMember payer;  // 구매자
+
     @ManyToOne(fetch = LAZY)
-    private PayoutMember payee;
+    private PayoutMember payee;  // 판매자
+
     private long amount;
+
     @OneToOne(fetch = LAZY)
     @Setter
     private PayoutItem payoutItem;

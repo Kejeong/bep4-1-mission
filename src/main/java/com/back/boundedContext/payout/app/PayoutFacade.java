@@ -19,7 +19,9 @@ public class PayoutFacade {
     private final PayoutCreatePayoutUseCase payoutCreatePayoutUseCase;
     private final PayoutAddPayoutCandidateItemsUseCase payoutAddPayoutCandidateItemsUseCase;
     private final PayoutCollectPayoutItemsMoreUseCase payoutCollectPayoutItemsMoreUseCase;
+    private final PayoutCompletePayoutsMoreUseCase payoutCompletePayoutsMoreUseCase;
     private final PayoutSupport payoutSupport;
+
 
     /**
      * 회원정보를 정산회원이랑 동기화한다.
@@ -33,8 +35,8 @@ public class PayoutFacade {
      * 정산을 생성한다.
      */
     @Transactional
-    public Payout createPayout(PayoutMemberDto payee) {
-        return payoutCreatePayoutUseCase.createPayout(payee);
+    public Payout createPayout(int payeeId) {
+        return payoutCreatePayoutUseCase.createPayout(payeeId);
     }
 
     /**
@@ -53,5 +55,10 @@ public class PayoutFacade {
     @Transactional(readOnly = true)
     public List<PayoutCandidateItem> findPayoutCandidateItems() {
         return payoutSupport.findPayoutCandidateItems();
+    }
+
+    @Transactional
+    public RsData<Integer> completePayoutsMore(int limit) {
+        return payoutCompletePayoutsMoreUseCase.completePayoutsMore(limit);
     }
 }
