@@ -20,9 +20,7 @@ public class PayoutCreatePayoutUseCase {
         PayoutMember _payee = payoutMemberRepository.getReferenceById(payee.getId());
 
         Payout payout = payoutRepository.save(
-                new Payout(
-                        _payee
-                )
+                new Payout(_payee)
         );
 
         return payout;
